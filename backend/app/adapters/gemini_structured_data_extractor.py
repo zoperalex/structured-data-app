@@ -1,12 +1,14 @@
+import os
 from google import genai
 from google.genai import types
 
-from schemas import TransactionExtractionResult
+from app.schemas.extract import TransactionExtractionResult
+from app.config import Config
 
 
-class GeminiClient:
+class GeminiStructuredDataExtractor:
     def __init__(self) -> None:
-        self._client = genai.Client()
+        self._client = genai.Client(api_key=Config.gemini_api_key())
 
     def extract_expense_note(self, text: str) -> TransactionExtractionResult:
         prompt = f"""
@@ -34,7 +36,6 @@ User text:
         )
 
         parsed = response.parsed
-
         if parsed is None:
             raise ValueError("Gemini returned no parsed structured result")
 
