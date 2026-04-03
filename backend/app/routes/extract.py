@@ -7,15 +7,22 @@ from app.use_cases.extract_structured_data import ExtractStructuredDataUseCase
 
 extract_blueprint = Blueprint("extract", __name__)
 
-extractor = GeminiStructuredDataExtractor()
-use_case = ExtractStructuredDataUseCase(extractor)
-
 
 @extract_blueprint.post("/api/extract")
 def extract_data():
     try:
         payload = ExtractRequest.model_validate(request.get_json())
-        response_model = use_case.execute(payload.text)
+
+        extractor = GeminiStructuredDataExtractor()
+        use_case = ExtractStructuredDataUseCase(extractor)
+
+        response_model = use_case.execute(
+            mode=payload.mode,
+            text=payload.text,
+            preset=payload.preset,
+            schema=payload.schema,
+        )
+
         return jsonify(response_model.model_dump())
     except ValidationError as exc:
         return (

@@ -1,15 +1,23 @@
 import { useState } from "react";
 
 import { extractStructuredData } from "../features/extract/api/extract";
-import { ExtractForm } from "../features/extract/components/ExtractForm";
-import { ExtractResult } from "../features/extract/components/ExtractResult";
-import type { ExtractResponse } from "../features/extract/types";
+import { ExtractWorkspace } from "../features/extract/components/ExtractWorkspace";
+import type {
+	ExtractResponse,
+	ExtractRequest,
+	ModeName,
+	PresetName,
+	SchemaField,
+} from "../features/extract/types";
 
 function App() {
+	const [mode, setMode] = useState<ModeName>("preset");
+	const [preset, setPreset] = useState<PresetName>("expense_note");
 	const [text, setText] = useState("");
 	const [result, setResult] = useState<ExtractResponse | null>(null);
 	const [error, setError] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [schemaFields, setSchemaFields] = useState<SchemaField[]>([]);
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -21,41 +29,49 @@ function App() {
 		setLoading(true);
 
 		try {
-			const data = await extractStructuredData(text);
+			const payload: ExtractRequest = {
+				mode,
+				preset: mode === "preset" ? preset : null,
+				schema: mode === "user_defined" ? schemaFields : null,
+				text,
+			};
+
+			const data = await extractStructuredData(payload);
 			setResult(data);
-		} catch (err: unknown) {
-			setError(err instanceof Error ? err.message : "Failed to fetch");
+		} catch (submitError: unknown) {
+			setError(
+				submitError instanceof Error
+					? submitError.message
+					: "Failed to fetch",
+			);
 		} finally {
 			setLoading(false);
 		}
 	}
 
 	return (
-		<main
-			style={{
-				padding: "2rem",
-				fontFamily: "Arial, sans-serif",
-				maxWidth: "900px",
-				margin: "0 auto",
-			}}
-		>
-			<h1>Structured Data Extractor</h1>
-			<p>Paste some text and get structured JSON back.</p>
+		<main className="page scrollbar-hidden">
+			<div className="page__header">
+				<h1 className="page__title">Structured Data Extractor</h1>
+				<p className="page__subtitle">
+					Extract structured information from messy text.
+				</p>
+			</div>
 
-			<ExtractForm
+			<ExtractWorkspace
+				mode={mode}
+				preset={preset}
 				text={text}
+				result={result}
+				error={error}
 				loading={loading}
+				schemaFields={schemaFields}
+				onModeChange={setMode}
+				onPresetChange={setPreset}
 				onTextChange={setText}
 				onSubmit={handleSubmit}
+				onSchemaChange={setSchemaFields}
 			/>
-
-			{error && (
-				<div style={{ marginTop: "1.5rem", color: "red" }}>
-					<strong>Error:</strong> {error}
-				</div>
-			)}
-
-			{result && <ExtractResult result={result} />}
 		</main>
 	);
 }
