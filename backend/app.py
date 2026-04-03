@@ -1,14 +1,10 @@
-from flask import Flask, jsonify
-from flask_cors import CORS
+from dotenv import load_dotenv
 
-app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173"])
+load_dotenv()
 
+from app import create_app
 
-@app.get("/api/health")
-def health_check():
-    return jsonify({"status": "ok"})
-
+app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
