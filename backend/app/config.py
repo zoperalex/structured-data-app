@@ -1,10 +1,18 @@
 import os
+from app.enums import Tier
 
 
 class Config:
     @staticmethod
-    def gemini_api_key() -> str:
-        key = os.getenv("GEMINI_API_KEY")
+    def get_env_variable(var_name: str) -> str:
+        key = os.getenv(var_name)
         if not key:
-            raise ValueError("GEMINI_API_KEY is not set")
+            raise ValueError(var_name + " is not set")
         return key
+
+
+TIER_LIMITS = {
+    Tier.FREE: {"saved_schemas": 1, "api_keys": 0},
+    Tier.PRO: {"saved_schemas": 5, "api_keys": 1},
+    Tier.BUSINESS: {"saved_schemas": 20, "api_keys": 3},
+}

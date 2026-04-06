@@ -16,7 +16,7 @@ T = TypeVar("T", bound=BaseModel)
 
 class GeminiStructuredDataExtractor:
     def __init__(self) -> None:
-        self._client = genai.Client(api_key=Config.gemini_api_key())
+        self._client = genai.Client(api_key=Config.get_env_variable("GEMINI_API_KEY"))
         self._model = "gemini-2.5-flash"
 
     def _generate(self, prompt: str, response_schema: Type[T]) -> T:
