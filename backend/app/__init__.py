@@ -32,6 +32,7 @@ def create_app() -> Flask:
             "http://127.0.0.1:5173",
             "https://jsonextract.com",
             "https://www.jsonextract.com",
+            "https://structured-data-app.vercel.app",
         ],
     )
 
