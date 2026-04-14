@@ -1,7 +1,7 @@
 import os
 from google import genai
 from google.genai import types
-from typing import Type, TypeVar
+from typing import Type, TypeVar, Any
 from pydantic import BaseModel
 
 from app.schemas.extract import (
@@ -62,12 +62,19 @@ Extract tasks from the user's text.
 
 Return data that matches the provided schema.
 Only include tasks that are explicitly present in the text.
+If a task is mentioned alongside a person who is responsible for it, 
+the task is no longer pending. If there is no information about how 
+far along the task is, assume it is "Not Started".
 
 Use:
 - task: a short description of the task
 - assignee: the person responsible for the task if mentioned, otherwise null
 - due_date: any mentioned deadline or date in string, otherwise null
-- status: short label describing the task state if clear. ONLY "Pending", "Not Started", "In Progress", "Completed". If not clear, assume "Pending".
+- status: short label describing the task state if clear. ONLY "Pending", "Not Started", "In Progress", "Completed".
+    If a task is mentioned without a status, and without a person responsible, assume "Pending".
+    If a task is mentioned without a status, but with a person responsible, assume "In Progress".
+    If a task is mentioned with a status that is not clear, but with a person responsible, assume "In Progress".
+    If a task is mentioned with a status, like "In Progress" or "Completed", but without a person responsible, assume the status is correct but the assignee is null.
 
 Rules:
 - Do NOT invent tasks
