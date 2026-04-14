@@ -21,7 +21,7 @@ def send_payment_failed_email(to_email: str) -> None:
                 We were unable to process your subscription payment. Please update your
                 payment method to avoid losing access to your current plan.
             </p>
-            <a href="https://your-domain.com/dashboard"
+            <a href="https://jsonextract.com/dashboard"
                style="display: inline-block; margin-top: 24px; padding: 12px 24px;
                       background: #000000; color: #ffffff; text-decoration: none;
                       border-radius: 8px; font-weight: 600; font-size: 15px;">
@@ -71,7 +71,7 @@ def send_downgrade_notice_email(
                 to <strong>{new_tier.capitalize()}</strong>.
             </p>
             {keys_message}
-            <a href="https://your-domain.com/dashboard"
+            <a href="https://jsonextract.com/dashboard"
                style="display: inline-block; margin-top: 24px; padding: 12px 24px;
                       background: #000000; color: #ffffff; text-decoration: none;
                       border-radius: 8px; font-weight: 600; font-size: 15px;">
