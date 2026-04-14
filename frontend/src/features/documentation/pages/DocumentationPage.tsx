@@ -452,7 +452,7 @@ export function DocumentationPage() {
 							The base URL for all API requests is:
 						</p>
 						<pre className="docs__code">
-							https://jsonextract.com
+							https://api.jsonextract.com
 						</pre>
 					</section>
 

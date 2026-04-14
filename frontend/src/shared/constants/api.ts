@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://structured-data-app-production.up.railway.app";
+export const API_BASE_URL = "https://api.jsonextract.com";
