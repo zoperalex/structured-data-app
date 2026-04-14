@@ -4,6 +4,7 @@ import { useAuth } from "../../features/auth/context/AuthContext";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { SignInModal } from "../../features/auth/components/SignInModal";
 import { SignOutModal } from "../../features/auth/components/SignOutModal";
+import { UsernameModal } from "../../features/auth/components/UsernameModal";
 
 type PageHeaderProps = {
 	title: string;
@@ -11,7 +12,7 @@ type PageHeaderProps = {
 };
 
 export function PageHeader({ title, subtitle }: PageHeaderProps) {
-	const { session, profile, loading, signOut } = useAuth();
+	const { session, profile, setProfile, loading, signOut } = useAuth();
 	const navigate = useNavigate();
 	const [showSignIn, setShowSignIn] = useState(false);
 	const [showSignOut, setShowSignOut] = useState(false);
@@ -19,6 +20,8 @@ export function PageHeader({ title, subtitle }: PageHeaderProps) {
 	const tierLabel = profile
 		? profile.tier.charAt(0).toUpperCase() + profile.tier.slice(1)
 		: null;
+
+	const needsUsername = session && profile && profile.username === null;
 
 	async function handleSignOut() {
 		await signOut();
@@ -63,6 +66,9 @@ export function PageHeader({ title, subtitle }: PageHeaderProps) {
 				)}
 			</div>
 
+			{needsUsername && session && (
+				<UsernameModal session={session} onComplete={setProfile} />
+			)}
 			{showSignIn && <SignInModal onClose={() => setShowSignIn(false)} />}
 			{showSignOut && (
 				<SignOutModal

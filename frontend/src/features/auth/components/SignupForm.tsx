@@ -6,7 +6,10 @@ type SignupFormProps = {
 	onSuccess: () => void;
 };
 
-export function SignupForm({ onToggle, onSuccess }: SignupFormProps) {
+export function SignupForm({
+	onToggle,
+	onSuccess: _onSuccess,
+}: SignupFormProps) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
