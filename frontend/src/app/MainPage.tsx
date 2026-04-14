@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useAuth } from "../features/auth/context/AuthContext";
-import { UsernameModal } from "../features/auth/components/UsernameModal";
 import { extractStructuredData } from "../features/extract/api/extract";
 import { ExtractWorkspace } from "../features/extract/components/ExtractWorkspace";
 import { Toast } from "../shared/components/Toast";
-import { useNavigate } from "react-router-dom";
 import { PageHeader } from "../shared/components/PageHeader";
 import type {
 	ExtractResponse,
@@ -15,7 +13,7 @@ import type {
 } from "../features/extract/types";
 
 function MainPage() {
-	const { session, profile, setProfile } = useAuth();
+	const { session } = useAuth();
 
 	const [mode, setMode] = useState<ModeName>("preset");
 	const [preset, setPreset] = useState<PresetName>("expense_note");
@@ -24,10 +22,6 @@ function MainPage() {
 	const [error, setError] = useState("");
 	const [extractLoading, setExtractLoading] = useState(false);
 	const [schemaFields, setSchemaFields] = useState<SchemaField[]>([]);
-
-	const needsUsername = session && profile && profile.username === null;
-
-	const navigate = useNavigate();
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
