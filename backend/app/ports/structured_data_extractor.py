@@ -1,4 +1,5 @@
-from typing import Protocol
+from typing import Any, Protocol
+from pydantic import BaseModel
 
 from app.schemas.extract import (
     TransactionExtractionResult,
