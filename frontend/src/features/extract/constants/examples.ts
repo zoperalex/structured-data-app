@@ -50,14 +50,14 @@ export const PRESET_EXAMPLES = {
 		}
 	},
 	contact_info: {
-		"input_text": "John Smith works at Welltech. Email: john.smith@example.com. Phone: +357 99 123456.",
+		"input_text": "John Smith works at ExampleTech. Email: john.smith@example.com. Phone: +357 99 123456.",
 		"mode": "preset",
 		"preset": "contact_info",
 		"result": {
 			"category": "contact_info",
 			"items": [
 			{
-				"company": "Welltech",
+				"company": "ExampleTech",
 				"email": "john.smith@example.com",
 				"name": "John Smith",
 				"phone": "+357 99 123456"
