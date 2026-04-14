@@ -25,7 +25,15 @@ def get_supabase_public_key():
 
 def create_app() -> Flask:
     app = Flask(__name__)
-    CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173"])
+    CORS(
+        app,
+        origins=[
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "https://jsonextract.com",
+            "https://www.jsonextract.com",
+        ],
+    )
 
     app.config["SQLALCHEMY_DATABASE_URI"] = Config.get_env_variable("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
