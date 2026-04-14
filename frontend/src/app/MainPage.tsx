@@ -58,7 +58,7 @@ function MainPage() {
 	return (
 		<main className="page scrollbar-hidden">
 			<PageHeader
-				title="JSONExtractor - Structured Data Extractor"
+				title="JSONExtract - Structured Data Extractor"
 				subtitle="Extract structured information from messy text."
 			/>
 
