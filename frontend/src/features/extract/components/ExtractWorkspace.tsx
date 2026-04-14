@@ -10,15 +10,16 @@ import { ModeSelector } from "./ModeSelector";
 import { OutputPanel } from "./OutputPanel";
 import { PresetSelector } from "./PresetSelector";
 import { SchemaBuilder } from "./SchemaBuilder/SchemaBuilder";
+import type { Session } from "@supabase/supabase-js";
 
 type ExtractWorkspaceProps = {
 	mode: ModeName;
 	preset: PresetName;
 	text: string;
 	result: ExtractResponse | null;
-	error: string;
 	loading: boolean;
 	schemaFields: SchemaField[];
+	session: Session | null;
 	onModeChange: (mode: ModeName) => void;
 	onPresetChange: (preset: PresetName) => void;
 	onTextChange: (value: string) => void;
@@ -31,9 +32,9 @@ export function ExtractWorkspace({
 	preset,
 	text,
 	result,
-	error,
 	loading,
 	schemaFields,
+	session,
 	onModeChange,
 	onPresetChange,
 	onTextChange,
@@ -63,7 +64,10 @@ export function ExtractWorkspace({
 						onPresetChange={onPresetChange}
 					/>
 				) : (
-					<SchemaBuilder onSchemaChange={onSchemaChange} />
+					<SchemaBuilder
+						onSchemaChange={onSchemaChange}
+						session={session}
+					/>
 				)}
 
 				<ExamplePanel
@@ -73,7 +77,7 @@ export function ExtractWorkspace({
 				/>
 			</div>
 
-			<OutputPanel result={result} error={error} loading={loading} />
+			<OutputPanel result={result} loading={loading} />
 		</section>
 	);
 }

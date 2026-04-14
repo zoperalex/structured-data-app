@@ -1,0 +1,16 @@
+from typing import Protocol
+from app.models.api_key import ApiKey
+
+
+class ApiKeyRepository(Protocol):
+    def get_active_keys(self, user_id: str) -> list[ApiKey]: ...
+
+    def get_active_key_count(self, user_id: str) -> int: ...
+
+    def create_key(
+        self, user_id: str, name: str, key_hash: str, key_prefix: str
+    ) -> ApiKey: ...
+
+    def revoke_key(self, key_id: int, user_id: str) -> None: ...
+
+    def get_key_by_hash(self, key_hash: str) -> ApiKey | None: ...

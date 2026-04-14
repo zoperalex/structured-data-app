@@ -9,7 +9,6 @@ import type {
 
 type OutputPanelProps = {
 	result: ExtractResponse | null;
-	error: string;
 	loading: boolean;
 };
 
@@ -74,7 +73,7 @@ function renderContactInfo(result: ContactInfoResult) {
 	);
 }
 
-export function OutputPanel({ result, error, loading }: OutputPanelProps) {
+export function OutputPanel({ result, loading }: OutputPanelProps) {
 	const [copied, setCopied] = useState(false);
 
 	const rawJson = result ? JSON.stringify(result, null, 2) : "";
@@ -97,10 +96,6 @@ export function OutputPanel({ result, error, loading }: OutputPanelProps) {
 	function renderResultContent() {
 		if (loading) {
 			return <p className="panel__muted">Waiting for response...</p>;
-		}
-
-		if (error) {
-			return <p className="error-text">{error}</p>;
 		}
 
 		if (!result) {

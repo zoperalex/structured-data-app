@@ -10,6 +10,7 @@ class Profile(db.Model):
     user_id = db.Column(db.String, unique=True, nullable=False)
     username = db.Column(db.String(50), nullable=True)
     tier = db.Column(db.Enum(Tier), default=Tier.FREE, nullable=False)
+    stripe_subscription_id = db.Column(db.String, nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(
         db.DateTime,

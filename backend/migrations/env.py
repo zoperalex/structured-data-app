@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from backend.app.models import Profile, SavedSchema
+from app.models import Profile, SavedSchema, RateLimitRequest
 from app.adapters.db.session import db
 
 config = context.config

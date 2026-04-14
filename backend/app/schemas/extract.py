@@ -19,6 +19,14 @@ class ExtractRequest(BaseModel):
     mode: ModeName
     preset: PresetName | None = None
     schema: list[SchemaField] | None = None
+    schema_id: int | None = None
+    text: str
+
+
+class ExtractRequest(BaseModel):
+    mode: ModeName
+    preset: PresetName | None = None
+    schema: list[SchemaField] | None = None
     text: str
 
 
